@@ -18,38 +18,42 @@ $(document).ready(function() {
 
     else {
       if((quantity > 1 && shoppingItem.substr(shoppingItem.length - 1) == 's')) {
-        shoppingItem = shoppingItem.substr(0, shoppingItem.length - 1);
+        // shoppingItem = shoppingItem.substr(0, shoppingItem.length - 1);
         $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone'/> (x" + quantity + ") " + shoppingItem.toLowerCase() + " </li>" );
       } /* More than 1 quantity, and the last character IS an 's', drop the 's'. Reassign the shoppingItem string, starting from the first character (at 0) up to and including the last character (shoppingItem.length - 1) This should be the 's', so now it becomes a singular item */
 
+      if(quantity === null && $("option").prop("disabled") === true){
+        $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone'/> " + shoppingItem.toLowerCase() + " </li>" );
+      }/* if no quantity and the disabled default option is still on, make shoppingItem singular */
+
       else if(quantity > 1 && shoppingItem.substr(shoppingItem.length - 1) != 's' ) {
-        $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone'/>(x" + quantity + ") " + shoppingItem.toLowerCase() + " </li>" );
+        $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone'/> (x" + quantity + ") " + shoppingItem.toLowerCase() + " </li>" );
       } /* Case of there being more than one quantity and the last character IS NOT an 's', leave the shoppingItem as is */
 
       else if(quantity == 1 && shoppingItem.substr(shoppingItem.length - 1) == 's'){
         shoppingItem = shoppingItem.substr(0, shoppingItem.length - 1);
-        $("#myUL").append("<li>  <input type='checkbox' name='done' class='itemDone'/>" + shoppingItem +  " </li>" );
+        $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone'/> " + shoppingItem +  " </li>" );
       } /* Exactly 1 quantity, and the last character IS an 's', drop the 's'.*/
 
       else if(quantity == 1 && shoppingItem.substr(shoppingItem.length - 1) != 's'){
-        $("#myUL").append("<li>  <input type='checkbox' name='done' class='itemDone' /> " + shoppingItem +  " </li>" );
+        $("#myUL").append("<li> <input type='checkbox' name='done' class='itemDone' /> " + shoppingItem +  " </li>" );
       } /* Exactly 1 quantity, and the last character IS NOT an 's', leave as is*/
     } // The input field has a valid shoppingItem
    $("#myItem").val();
   }
- 
-  
-   function doneBuyItem() {      /*----strike through the item when done buying it----*/
+
+
+  function doneBuyItem() {      /*----strike through the item when done buying it----*/
      $(this).parent().toggleClass('strike');
- } 
+ }
 
     $(function(){
     $("#add").on("click", addListItem) ;
     $(document).on('click','.itemDone', doneBuyItem);
 
   });
-  
 
 
-  
+
+
 });
